@@ -13,6 +13,7 @@ PShader gaussianBlur5Shader;
 PShader unsharpShader;
 PShader asciiGrayShader;
 PShader asciiColorShader;
+boolean frameR;
 
 void setup() 
 {
@@ -22,6 +23,7 @@ void setup()
   original.resize(512,512); //450,450 512,280
   updated = loadImage("temp2.jpg");
   updated.resize(512,512);
+  frameR = false;
   
   //Load PShaders
   originalShader = loadShader("originalfrag.glsl");
@@ -39,12 +41,17 @@ void setup()
   //Initializewith default value
   selShader = originalShader;
   background(250,250,250);
+  
 }
 
 void draw() 
 {
   drawOriginal();
   drawUpdate();
+  if (frameR)
+  {
+    println(frameRate);
+  }
 }
 
 void drawOriginal()
@@ -117,5 +124,16 @@ void keyPressed()
   {
     println("convolution: unsharp masking 5x5");
     selShader = unsharpShader;
+  }
+  else if(key == 'f')
+  {
+    println("------------------- FRAMERATE ------------------- ");
+    if (frameR){
+      frameR = false;
+    }
+    else
+    {
+     frameR = true; 
+    }
   }
 }
